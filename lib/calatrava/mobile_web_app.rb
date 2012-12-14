@@ -58,6 +58,11 @@ module Calatrava
         end
       end
 
+      js_files.collect do | jf |
+        FileUtils.mkdir_p("#{scripts_build_dir}")
+        FileUtils.copy(jf, "#{scripts_build_dir}/#{File.basename(jf)}") unless jf.nil?
+      end
+
       app_files << file("#{build_dir}/index.html" => [@manifest.src_file, "web/app/views/index.haml"] + haml_files) do
         HamlSupport::compile "web/app/views/index.haml", build_dir
       end
